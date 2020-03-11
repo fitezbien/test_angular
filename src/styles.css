@@ -1,0 +1,22 @@
+/* You can add global styles to this file, and also import other style files */
+.container{
+
+    margin-top: 100px;
+}
+.img{
+
+    width: 23px;
+}
+.libelle{
+
+    padding-right: 20px;
+}
+.modal-dialog {
+
+    max-width: 350px;
+    margin: 1.75rem auto;
+}
+
+.row{
+    margin-left:0;
+}

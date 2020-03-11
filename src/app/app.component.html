@@ -1,0 +1,126 @@
+
+<div class="container">
+  <h2 class="text-center .mb-5">Liste des interventions</h2>
+  <table class="table table-striped">
+    <thead class="table-info">
+      <tr class="text-center">
+        <th class="text-center" scope="col">N°</th>
+        <th class="text-center" scope="col">Libellé</th>
+        <th scope="col">Description</th>
+        <th scope="col">Intervenant</th>
+        <th scope="col">Lieu</th>
+        <th scope="col">Date<img src="../assets/img/arrowTop.png" class="img" id="croissant"><img src="../assets/img/arrowDown.png" class="img" id="decroissant"></th>
+        <th scope="col">Statut</th>
+        <th scope="col"></th>
+        <th scope="col"></th>
+      </tr>
+    </thead>
+    <tbody id="tbody1">
+      <tr *ngFor="let intervention of interventions; let i = index">
+        <th class ="row" scope="row">{{i + 1}}</th>
+        <td>{{intervention.libelle}}</td>
+        <td>{{intervention.description}}</td>
+        <td>{{intervention.intervenant}}</td>
+        <td>{{intervention.lieu}}</td>
+        <td class ="date">{{intervention.date | date:'dd/MM/yyyy'}}</td>
+        <td>{{intervention.statut}}</td>
+        <td><img data-toggle="modal" *ngIf="intervention.statut != 'Terminé'" (click)="interventionClicked(intervention)"  data-target="#modalActions"  src="../assets/img/edit.png" class="img"></td>
+        <td><img src="../assets/img/delete.png" (click)="interventionClicked(intervention)" class="img" data-toggle="modal" data-target="#deleteIntervention"></td>
+      </tr>
+    </tbody>
+  </table>
+	<button type="button" (click)="addClicked()"  class="btn btn-primary" data-toggle="modal"  data-target="#modalActions">Ajouter</button>
+  </div>
+
+<!-- Modal Add and update-->
+<div class="modal"  id= "modalActions" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" class="w-100 text-center"  *ngIf="selectedIntervention.id != -1">Modifier une intervention</h5>
+          <h5 class="modal-title" class="w-100 text-center"  *ngIf="selectedIntervention.id == -1">Ajouter une intervention</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+			<div class="modal-body">
+			  <table>
+				  <tbody>
+					<tr>
+					  <td class="text-right"><label class="libelle" for="libelle">Libellé :</label></td>
+					  <td>
+              <input id="libelle" *ngIf="selectedIntervention.statut != 'Terminé'" required  [(ngModel)]="selectedIntervention.libelle"  class="text-center" type="text">
+              <input id="libelle" *ngIf="selectedIntervention.statut == 'Terminé'" [(ngModel)]="selectedIntervention.libelle" class="text-center" type="text" disabled>
+            </td>
+					</tr>
+          <tr>
+					  <td class="text-right"><label for="description">Description :</label></td>
+					  <td>
+              <textarea *ngIf="selectedIntervention.statut != 'Terminé'"  class="w-100" id="description" [(ngModel)]="selectedIntervention.description"></textarea>
+              <textarea *ngIf="selectedIntervention.statut == 'Terminé'"  class="w-100" id="description" [(ngModel)]="selectedIntervention.description" disabled></textarea>
+            </td>
+					</tr>
+					<tr>
+					  <td class="text-right"><label for="intervenant">intervenant :</label></td>
+					  <td>
+            <input *ngIf="selectedIntervention.statut != 'Terminé'"  class="text-center" id="intervenant" type="text" [(ngModel)]="selectedIntervention.intervenant">
+            <input *ngIf="selectedIntervention.statut == 'Terminé'"  class="text-center" id="intervenant" type="text" [(ngModel)]="selectedIntervention.intervenant" disabled>
+            </td>
+					</tr>
+					<tr>
+					  <td class="text-right"><label for="lieu">Lieu :</label></td>
+					  <td>
+            <input *ngIf="selectedIntervention.statut != 'Terminé'"  class="text-center" id="lieu" type="text" [(ngModel)]="selectedIntervention.lieu">
+            <input *ngIf="selectedIntervention.statut == 'Terminé'"  class="text-center" id="lieu" type="text" [(ngModel)]="selectedIntervention.lieu" disabled>
+            </td>
+					</tr>
+          <tr>  
+					  <td class="text-right"><label for="date">Date :</label></td>
+					  <td>
+              <input *ngIf="selectedIntervention.statut != 'Terminé'" class="text-center" [(ngModel)]="selectedIntervention.date" type="date" id="date">
+              <input *ngIf="selectedIntervention.statut == 'Terminé'" class="text-center" [(ngModel)]="selectedIntervention.date" type="date" id="date" disabled>
+            </td>
+					</tr>
+          <tr>
+					  <td class="text-white bg-dark"> Statut : {{selectedIntervention.statut}}</td>
+					</tr>
+				  </tbody>
+				</table>
+			</div>
+			<div class="modal-footer">
+        <h6 *ngIf="selectedIntervention.statut == 'Terminé'" class="text-danger">Modification impossible (Terminé)</h6>
+			  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+			  <button *ngIf="selectedIntervention.id != -1 && selectedIntervention.statut != 'Terminé'" type="button" (click)="updateIntervention()" class="btn btn-primary">Modifier</button>
+        <button *ngIf="selectedIntervention.id != -1 && selectedIntervention.statut == 'Terminé'" type="button" (click)="updateIntervention()" class="btn btn-primary" disabled>Modifier</button>
+        <button *ngIf="selectedIntervention.id == -1" (click)="createIntervention()" class="btn btn-primary">Ajouter</button>
+			</div>
+      </div>
+    </div>
+</div>
+<!-- END Modal Add and update-->
+
+<!-- Modal Suppression-->
+<div class="modal fade" id="deleteIntervention" tabindex="-1" role="dialog" aria-labelledby="deleteIntervention" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Supprimer une intervention</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+         Voulez vous confirmer la suppression de l'intervention : {{selectedIntervention.libelle}}
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Non</button>
+        <button type="button" class="btn btn-primary" (click)="deleteIntervention()" data-dismiss="modal">Oui</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- END Modal Suppression-->
+
+
+
+
