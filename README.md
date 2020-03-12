@@ -3,11 +3,7 @@ IDE Visual Studio Code
 
 Angular 9.0.5.
 
-Librairies :
-
-Bootstrap (design)
-
-Jquery (filtres sur date)
+Librairies : Bootstrap (design), Jquery (filtres sur date)
 
 
 ## Development server
