@@ -1,9 +1,12 @@
 # TestApp
 IDE Visual Studio Code
-Angular version 9.0.5.
+
+Angular 9.0.5.
 
 Librairies :
+
 Bootstrap (design)
+
 Jquery (filtres sur date)
 
 
