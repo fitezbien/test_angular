@@ -25,7 +25,7 @@
     "@angular/router": "~9.0.5",
     "@ng-bootstrap/ng-bootstrap": "^6.0.0",
     "bootstrap": "^4.4.1",
-    "jquery": "^3.4.1",
+    "jquery": "^3.5.0",
     "moment": "^2.24.0",
     "ng2-date-picker": "^8.0.0",
     "ngx-bootstrap": "^5.5.0",
