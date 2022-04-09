@@ -26,7 +26,7 @@
     "@ng-bootstrap/ng-bootstrap": "^6.0.0",
     "bootstrap": "^4.4.1",
     "jquery": "^3.4.1",
-    "moment": "^2.24.0",
+    "moment": "^2.29.2",
     "ng2-date-picker": "^8.0.0",
     "ngx-bootstrap": "^5.5.0",
     "rxjs": "~6.5.4",
